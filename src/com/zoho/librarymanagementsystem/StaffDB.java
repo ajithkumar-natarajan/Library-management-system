@@ -3,114 +3,124 @@ package com.zoho.librarymanagementsystem;
 import java.util.*;
 import java.time.LocalDate;
 
+@SuppressWarnings("resource")
+
 public class StaffDB {
-//	private TreeMap<Integer, StaffBorrowList> staffDB;
-	private TreeMap<Integer, LinkedList<Integer>> staffDB;
-	private BookDB staffData;
-	private LocalDate returnDate;
-//	private StaffBorrowList list;
+	private TreeMap<Integer, Staff> staffData;
+//	private TreeMap<Integer, LinkedList<Integer>> staffDB;
+//	private TreeMap<Staff, LinkedList<Integer>> staffDB;
+//	private LocalDate returnDate;
+//	private Staff staff;
+//	private Scanner input;
 	
 	public StaffDB(){
-//		staffDB = new TreeMap<Integer, StaffBorrowList>();
-		staffDB = new TreeMap<Integer, LinkedList<Integer>>();
-		staffData = new BookDB();
-		returnDate = LocalDate.now().plusDays(90);
-//		list = new StaffBorrowList();
+		staffData = new TreeMap<Integer, Staff>();
+//		staffDB = new TreeMap<Integer, LinkedList<Integer>>();
+//		staffDB = new TreeMap<Staff, LinkedList<Integer>>();
+//		returnDate = LocalDate.now().plusDays(Staff.getReturnPeriod());
+//		input = new Scanner(System.in);
 	}
-//	StaffBorrowList list = new StaffBorrowList();
 	
-	public void addBook(int regNo, int id) {
-		if(staffDB.containsKey(regNo)) {
-			LinkedList<Integer> bookIDList = staffDB.get(regNo);
-			if(bookIDList.size()<6) {
-				bookIDList.add(id);
-				staffDB.put(regNo, bookIDList);
+	public void addStaff() {
+		System.out.println("Please enter the registration number:");
+		Scanner input = new Scanner(System.in);
+		int regNo = input.nextInt();
+		input.nextLine();
+		System.out.println("Please enter the name:");
+		String name = input.nextLine();
+		System.out.println("Please enter the department");
+		String dept = input.nextLine();
+		Staff staff = new Staff(regNo, name, dept);
+		staffData.put(regNo, staff);
+//		input.close();
+	}
+	
+	public void removeStaff() {
+		System.out.println("Please enter the registration number:");
+		Scanner input = new Scanner(System.in);
+		int regNo = input.nextInt();
+		input.nextLine();
+		System.out.println(staffData.get(regNo).getName()+" has been removed.");
+//		studentData.put(regNo, student);
+		staffData.remove(regNo);
+//		input.close();
+	}
+	
+	public void addBook(int regNo, Book book) {
+		if(staffData.containsKey(regNo)) {
+//		if(staffDB.containsKey(regNo)) {
+//			LinkedList<Integer> bookIDList = staffDB.get(staffList.get(regNo));
+//			LinkedList<Integer> bookIDList = staffData.get(regNo).getBookList();
+//			if(bookIDList.size()<(staffData.get(regNo).BOOKLIMIT)) {
+//							if(staffData.get(regNo).getBookList().size()<(staffData.get(regNo).BOOKLIMIT)) {
+			if(staffData.get(regNo).getBookList().size()<(staffData.get(regNo).BOOKLIMIT)) {
+//				bookIDList.add(id);
+				staffData.get(regNo).borrowBook(book);
+//				staffDB.put(regNo, bookIDList);
+//				staffDB.put(key, value)
+				LocalDate returnDate = LocalDate.now().plusDays(Staff.getReturnPeriod());
 				System.out.println("Returning date for book: "+returnDate); 
 			}
 			else
 				System.out.println("Book limit reached already");
-//			for (Map.Entry item:staffDB.entrySet()){
-//				System.out.println("in if "+item.getValue());
-//			}
-//			else //throw limit reached exception
 		}
-		else {
-			LinkedList<Integer> bookIDList = new LinkedList<Integer>();
-			bookIDList.add(id);
-			staffDB.put(regNo, bookIDList);
-			System.out.println("Returning date for book: "+returnDate);
-//			for (Map.Entry item:staffDB.entrySet()){
-//				System.out.println(item.getValue());
-//				System.out.println((Book)item);
-//			}
-		}
-	}
-	
-	public void removeBook(int regNo, int id) {
-//		if(staffDB.containsKey(regNo)) {
-		try {
-			LinkedList<Integer> bookIDList = staffDB.get(regNo);
-//			System.out.println("in iff "+bookIDList);
-//			System.out.println(id);
-			Integer rem = new Integer(id);
-			bookIDList.remove(rem);
-			staffDB.put(regNo, bookIDList);
-		} catch(Exception e) {
-			return;
-		}
-//		}
-//		else { //must return "no such book in your database error"
+		else
 //			LinkedList<Integer> bookIDList = new LinkedList<Integer>();
 //			bookIDList.add(id);
 //			staffDB.put(regNo, bookIDList);
-//		}
+//			System.out.println("Returning date for book: "+returnDate);
+			System.out.println("No such user is registered. Please ask the admin to register yourself.");
 	}
 	
-	public void viewBorrowedBooks(int regNo){
-		if(staffDB.containsKey(regNo)) {
-			LinkedList<Integer> list = staffDB.get(regNo);
-	//		 list.dispBorrowList(list);
-			 Iterator<Integer> itr=list.iterator();
-			 BookDB staffData = new BookDB();
-			 while(itr.hasNext()){
-				 staffData.dispBookDetails(itr.next());
-				 System.out.println(itr.next());
-	//			 itr.next().dispBookDetails();
-			 }
+	public void removeBook(int regNo, Book book) {
+		try {
+			if(staffData.containsKey(regNo)) {
+				if(staffData.get(regNo).getBookList().contains(book))
+					staffData.get(regNo).getBookList().remove(book);
+				else
+					System.out.println("This book has not been borrowed by you.");
+//				LinkedList<Integer> bookIDList = staffDB.get(regNo);
+//				Integer rem = new Integer(id);
+//				bookIDList.remove(rem);
+//				staffDB.put(regNo, bookIDList);
+			}
+			else 
+				System.out.println("No such user is registered. Please ask the admin to register yourself.");
+		} catch(Exception e) {
+			return;
 		}
 	}
 	
-	public TreeMap<Integer,LinkedList<Integer>> viewAllStaffDB(){
-//							for(Map.Entry<Integer, LinkedList<Integer>> item:staffDB.entrySet()){
-//								 System.out.println(item.getKey());
-//					//			 list.dispBorrowList();
-//								 
-//					//			 StudentBorrowList list = (StudentBorrowList) item.getValue();
-//					//			 Book list = (Book) item.getValue();
-//					//			 list.dispBorrowList(list);
-//					//			 list.printBookDetails();
-//								 LinkedList<Integer> list = item.getValue();
-//								 Iterator<Integer> itr=list.iterator();  
-//								  while(itr.hasNext()){  
-//									  staffData.dispBookDetails(itr.next());
-//					//				  System.out.println(itr.next());  
-//								  }
-//							}
-		return staffDB;
-	}
-	
-	public LinkedList<Integer> getBookList(int regNo) {
+//	public void viewBorrowedBooks(int regNo){
 //		if(staffDB.containsKey(regNo)) {
-			LinkedList<Integer> list = staffDB.get(regNo);
-	//		 list.dispBorrowList(list);
-			return list;
-//			Iterator<Integer> itr=list.iterator();
-//			BookDB staffData = new BookDB();
-//			while(itr.hasNext()){
+//			LinkedList<Integer> list = staffDB.get(regNo);
+//			 Iterator<Integer> itr=list.iterator();
+//			 BookDB staffData = new BookDB();
+//			 while(itr.hasNext()){
 //				 staffData.dispBookDetails(itr.next());
 //				 System.out.println(itr.next());
-//	//			 itr.next().dispBookDetails();
-//			}
+//			 }
+//		}
+//	}
+	
+	public void viewAllStaffDB(){
+		for(Map.Entry<Integer, Staff> item:staffData.entrySet()){
+			 System.out.println("Staff ID:" + item.getKey());
+			 LinkedList<Book> list = item.getValue().getBookList();
+			 Iterator<Book> itr=list.iterator();
+			 while(itr.hasNext()){
+				 Book.printBookDetails(itr.next());
+				}
 		}
+	}
+	
+	public void dispStaffBookList(int regNo) {
+//		LinkedList<Integer> list = staffDB.get(regNo);
+		 System.out.println("Staff ID:" + staffData.get(regNo).getID());
+		 LinkedList<Book> list = staffData.get(regNo).getBookList();
+		 Iterator<Book> itr=list.iterator();
+		 while(itr.hasNext()){
+			 Book.printBookDetails(itr.next());
+			}
+	}
 }
-//}

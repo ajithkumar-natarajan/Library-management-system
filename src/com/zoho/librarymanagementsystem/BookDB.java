@@ -4,19 +4,22 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+@SuppressWarnings("resource")
+
 public class BookDB{
 	private TreeMap<Integer, Book> bookList;
 	private TreeMap<Integer, Integer> bookQuantity;
-	private Scanner input;
+//	private Scanner input;
 	
 	public BookDB() {
 		bookList = new TreeMap<Integer, Book>();
 		bookQuantity = new TreeMap<Integer, Integer>();
-		input = new Scanner(System.in);
+//		input = new Scanner(System.in);
 	}
 
 	public void addBook(){
 		System.out.println("Enter the ID of the book:");
+		Scanner input = new Scanner(System.in);
 		int bookID = input.nextInt();
 		input.nextLine();
 		System.out.println("Enter the name of the book:");
@@ -32,16 +35,14 @@ public class BookDB{
 			int totalQuantity = quantityAvailable+quantity;
 			bookQuantity.put(bookID, totalQuantity);
 		}
-//		else
-//			bookList.put(book, 1);
 		bookList.put(bookID, book);
 		bookQuantity.put(bookID, quantity);
-//		System.out.println(bookList);
 		book.printBookDetails();
 	}
 
-	public void deleteBook(){ //sorry book not available
+	public void deleteBook(){
 			System.out.println("Enter the ID of the book:");
+			Scanner input = new Scanner(System.in);
 			int bookID = input.nextInt();
 			if(bookList.containsKey(bookID)) {
 				bookList.remove(bookID);
@@ -49,25 +50,9 @@ public class BookDB{
 			}
 			else
 				System.out.println("Entered book is not available in the database.");
-	//		if(bookList.containsKey(book))
-	//		{
-	//			int quantity = bookList.get(book);
-	//			if(quantity == 1)
-	//				bookList.remove(book);
-	//			else
-	//				bookList.put(book, --quantity);
-	//		}
 	}
 	
-//	public void deleteBook(int id){ //sorry book not available
-//		bookList.remove(id);
-//		bookQuantity.remove(id);
-//	}
-	
 	public void transactBook(int id, int quantity){
-//		if(quantity==0)
-//			bookQuantity.remove(id);
-//		else
 			bookQuantity.put(id, quantity);
 	}
 	
@@ -79,23 +64,19 @@ public class BookDB{
 	}
 	
 	public void dispBookDB() {
-		for (Map.Entry item:bookList.entrySet()){
+		for (Map.Entry<Integer,Book> item:bookList.entrySet()){
 			((Book) item.getValue()).printBookDetails();
 			System.out.println("Quantity available: "+bookQuantity.get(item.getKey()));
-//			System.out.println((Book)item);
 		}
 	}
 	
-//	public void dispBookDB() {
-//		for (Map.Entry<Integer, Book> entry : bookList.entrySet()) {
-//		     System.out.println("Key: " + entry.getKey() + ". Value: " + entry.getValue());
-//		}
-////		System.out.println("HI");
-//	}
-	
 	public void dispBookDetails(int id) {
 		Book book = bookList.get(id);
-//		System.out.println(book);
 		book.printBookDetails();
+	}
+	
+	public Book getBookDetails(int id) {
+		Book book = bookList.get(id);
+		return book;
 	}
 }

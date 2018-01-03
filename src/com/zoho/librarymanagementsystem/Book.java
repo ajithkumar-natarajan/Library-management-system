@@ -1,7 +1,5 @@
 package com.zoho.librarymanagementsystem;
 
-//import javax.swing.plaf.synth.SynthSeparatorUI;
-
 public class Book {
 	private int id;
 	private String title, author;
@@ -11,11 +9,6 @@ public class Book {
 		this.title = title;
 		this.author = author;
 	}
-	
-//	public Book(String title, String author){
-//		this.title = title;
-//		this.author = author;
-//	}
 
 	public void setID(int id){
 		this.id = id;
@@ -43,6 +36,11 @@ public class Book {
 
 	public void printBookDetails() {
 		System.out.println(this.id+" : "+this.title+" by "+this.author);
+		System.out.println("");
+	}
+	
+	public static void printBookDetails(Book book) {
+		System.out.println(book.id+" : "+book.title+" by "+book.author);
 		System.out.println("");
 	}
 }
