@@ -4,22 +4,19 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-@SuppressWarnings("resource")
-
 public class BookDB{
 	private TreeMap<Integer, Book> bookList;
 	private TreeMap<Integer, Integer> bookQuantity;
-//	private Scanner input;
+	private Scanner input;
 	
 	public BookDB() {
 		bookList = new TreeMap<Integer, Book>();
 		bookQuantity = new TreeMap<Integer, Integer>();
-//		input = new Scanner(System.in);
+		input = new Scanner(System.in);
 	}
 
 	public void addBook(){
 		System.out.println("Enter the ID of the book:");
-		Scanner input = new Scanner(System.in);
 		int bookID = input.nextInt();
 		input.nextLine();
 		System.out.println("Enter the name of the book:");
@@ -42,7 +39,6 @@ public class BookDB{
 
 	public void deleteBook(){
 			System.out.println("Enter the ID of the book:");
-			Scanner input = new Scanner(System.in);
 			int bookID = input.nextInt();
 			if(bookList.containsKey(bookID)) {
 				bookList.remove(bookID);

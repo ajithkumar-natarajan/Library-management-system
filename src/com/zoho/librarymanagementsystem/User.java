@@ -5,8 +5,8 @@ import java.util.LinkedList;
 public class User {
 	private String name, dept;
 	private int id;
-//	protected static int returnPeriod;
-//	protected int numberOfBooks;
+	protected static int returnPeriod;
+	protected int numberOfBooks;
 //	private LinkedList<Integer> bookList;
 	private LinkedList<Book> bookList;
 	
