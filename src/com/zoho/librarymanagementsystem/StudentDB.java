@@ -109,7 +109,8 @@ public class StudentDB {
 			 LinkedList<Book> list = item.getValue().getBookList();
 			 Iterator<Book> itr=list.iterator();
 			 while(itr.hasNext()){
-				 Book.printBookDetails(itr.next());
+//				 Book.printBookDetails(itr.next());
+				 System.out.println(itr.next());
 				}
 		}
 	}
@@ -120,7 +121,8 @@ public class StudentDB {
 		 LinkedList<Book> list = studentData.get(regNo).getBookList();
 		 Iterator<Book> itr=list.iterator();
 		 while(itr.hasNext()){
-			 Book.printBookDetails(itr.next());
+//			 Book.printBookDetails(itr.next());
+			 System.out.println(itr.next());
 			}
 	}
 }

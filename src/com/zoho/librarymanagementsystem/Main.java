@@ -2,10 +2,37 @@ package com.zoho.librarymanagementsystem;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main implements Cloneable{
 
+	
+	
+	public static boolean checkEqual(Object obj1, Object obj2) {
+		return obj1.equals(obj2);
+	}
+	
 	@SuppressWarnings("resource")
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		/*
+		String yy = "raja";
+		String hh = "raja";
+//		System.out.println("-------" + yy.equals(hh));
+		
+//		Book obj1 = new Book(1, "Test", "author");
+//		Book obj3 = (Book) obj1.clone();
+//		Book obj2 = obj1;
+		
+		Book ob1 = new Book(2, "Zoho", null);
+		Book ob2 = new Book(2, "Zoho", null);
+//		Book ob2 = (Book) ob1.clone();
+		System.out.println( ob1.equals(ob2));
+		System.out.println( ob1==ob2);
+		System.out.println(ob1);
+		System.out.println(ob2);
+		System.out.println(ob1.hashCode());
+		System.out.println(ob2.hashCode());
+		*/
+		
+		
 		int regNo;
 		
 		Library admin = new Library();

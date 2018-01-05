@@ -10,7 +10,7 @@ public class Staff extends User {
 //		new User(id, name, dept);
 		BOOKLIMIT = 6;
 //		RETURNDURATION = 90;
-		returnPeriod = 90;
+//		returnPeriod = 90;
 //		numberOfBooks = 6;
 	}
 	

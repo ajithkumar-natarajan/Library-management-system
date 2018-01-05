@@ -9,7 +9,7 @@ public class Student extends User {
 //		new User(id, name, dept);
 		super(id, name, dept);
 		BOOKLIMIT = 3;
-		returnPeriod = 14;
+//		returnPeriod = 14;
 //		numberOfBooks = 3;
 	}
 	

@@ -1,22 +1,29 @@
 package com.zoho.librarymanagementsystem;
 
+//import java.util.Comparator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.TreeSet;
+
+@SuppressWarnings("resource")
 
 public class BookDB{
 	private TreeMap<Integer, Book> bookList;
+	private TreeSet<Book> bookListSort;
 	private TreeMap<Integer, Integer> bookQuantity;
-	private Scanner input;
+//	private Scanner input;
 	
 	public BookDB() {
 		bookList = new TreeMap<Integer, Book>();
+		bookListSort = new TreeSet<>(new BookSort());
 		bookQuantity = new TreeMap<Integer, Integer>();
-		input = new Scanner(System.in);
+//		input = new Scanner(System.in);
 	}
 
 	public void addBook(){
 		System.out.println("Enter the ID of the book:");
+		Scanner input = new Scanner(System.in);
 		int bookID = input.nextInt();
 		input.nextLine();
 		System.out.println("Enter the name of the book:");
@@ -33,12 +40,16 @@ public class BookDB{
 			bookQuantity.put(bookID, totalQuantity);
 		}
 		bookList.put(bookID, book);
+		bookListSort.add(book);
 		bookQuantity.put(bookID, quantity);
-		book.printBookDetails();
+//		book.printBookDetails();
+		System.out.println(book);
+//		System.out.println(book.hashCode());
 	}
 
 	public void deleteBook(){
 			System.out.println("Enter the ID of the book:");
+			Scanner input = new Scanner(System.in);
 			int bookID = input.nextInt();
 			if(bookList.containsKey(bookID)) {
 				bookList.remove(bookID);
@@ -61,14 +72,20 @@ public class BookDB{
 	
 	public void dispBookDB() {
 		for (Map.Entry<Integer,Book> item:bookList.entrySet()){
-			((Book) item.getValue()).printBookDetails();
+//			((Book) item.getValue()).printBookDetails();
+			System.out.println(item.getValue());
 			System.out.println("Quantity available: "+bookQuantity.get(item.getKey()));
 		}
+//		for(Book b:bookListSort) { //Uncomment to sort books according to book title when printing book database
+//			System.out.println(b);
+//			System.out.println("Quantity available: " +bookQuantity.get(b.getID()));
+//		}
 	}
 	
 	public void dispBookDetails(int id) {
 		Book book = bookList.get(id);
-		book.printBookDetails();
+//		book.printBookDetails();
+		System.out.println(book);
 	}
 	
 	public Book getBookDetails(int id) {
